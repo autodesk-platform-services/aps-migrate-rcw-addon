@@ -1,8 +1,8 @@
-# forge-rcw.file.migration-revit.addon
+# Migrate RCW to Autodesk Docs
  
 ![Platforms](https://img.shields.io/badge/platform-Windows-lightgray.svg)
 ![.NET](https://img.shields.io/badge/.NET-4.8-blue.svg)
-![Revit](https://img.shields.io/badge/Revit-2022-blue.svg)
+![Revit](https://img.shields.io/badge/Revit-2023-blue.svg)
 
 ![Visual-Studio](https://img.shields.io/badge/Visual%20Studio-2019-green.svg)
 [![Data-Management](https://img.shields.io/badge/Data%20Management-v2-green.svg)](http://developer.autodesk.com/)
@@ -13,7 +13,7 @@
 
 
 # Description
-This Revit addon sample is based on the project from Revit 2022 SDK sample (\<SDK install\>\Samples\CloudAPISample\), it is intended for demonstrating the usage of Revit Cloud API. This sample demonstrates the workflow of  migrating a Revit RCW model from `BIM 360 Team` to `BIM 360 Docs`.
+This Revit addon sample is based on the project from Revit 2023 SDK sample (\<SDK install\>\Samples\CloudAPISample\), it is intended for demonstrating the usage of Revit Cloud API. This sample demonstrates the workflow of  migrating a Revit RCW model from `BIM 360 Team` to `BIM 360 Docs`.
 
 The sample addon includes the following features:
 1. Access all the contents within BIM 360 Team and Docs by logging with Autodesk Account.
@@ -35,35 +35,35 @@ The sample addon includes the following features:
 
 
 # Disclaimer: Security considerations
-- To focus on demonstrating the new Revit API feature, this sample uses the user environment variables to save your Forge keys to simplify the authentication process. This is enough to understand the sample and use for your own. 
+- To focus on demonstrating the new Revit API feature, this sample uses the user environment variables to save your APS keys to simplify the authentication process. This is enough to understand the sample and use for your own. 
 
 - However, the developer should be aware that this approach does not show the best practice when delivering the application to your customers. Please refer to the 'secure-dev' branch of  https://github.com/Autodesk-Forge/forge.wpf.csharp as an example of more secure version of authentication implementation when delivering your application to a customer. 
 
 
 # Running locally
-- For using this sample, you need an Autodesk Forge developer credentials. Visit the [Forge Developer Portal](https://developer.autodesk.com), sign up for an account, then [create an app](https://developer.autodesk.com/myapps/create). For this new app, use http://localhost:3000/api/forge/callback/oauth as Callback URL. Finally take note of the Client ID and Client Secret. 
+- For using this sample, you need an Autodesk APS developer credentials. Visit the [Autodesk Developer Portal](https://developer.autodesk.com), sign up for an account, then [create an app](https://developer.autodesk.com/myapps/create). For this new app, use http://localhost:3000/api/aps/callback/oauth as Callback URL. Finally take note of the Client ID and Client Secret. 
 
-- Connect your Forge App to a Specific BIM 360 Account, follow the [tutorial](https://forge.autodesk.com/en/docs/bim360/v1/tutorials/getting-started/get-access-to-account/)
+- Connect your APS App to a Specific BIM 360 Account, follow the [tutorial](https://aps.autodesk.com/en/docs/bim360/v1/tutorials/getting-started/get-access-to-account/)
 
-- Download the repository, open `RevitCloudSample.sln` Solution on Visual Studio. The build process should download the required packages (**Autodesk.Forge** and dependencies). Compile and build the project.
+- Download the repository, open `RevitCloudSample.sln` Solution on Visual Studio. The build process should download the required packages (**Autodesk.APS** and dependencies). Compile and build the project.
 
-- Setup the environment variables of your Forge App key following the steps. (Please make sure you keep the keys secure.  Do not share with others, nor expose publicly.)
+- Setup the environment variables of your APS App key following the steps. (Please make sure you keep the keys secure.  Do not share with others, nor expose publicly.)
     1. From the desktop, right-click the very bottom-left corner of the screen to get the Power User Task Menu.
     2. Click System from the Power User Task Menu that’s displayed on the screen.
     3. Under the System menu, you need to click the Advanced System Settings.
     4. In the System Properties window, click the Advanced tab, then click the Environment Variables button near the bottom of that tab.
     5. Add the following environment variables:
 ```
-    FORGE_CLIENT_ID = your_client_key
-    FORGE_CLIENT_SECRET = your_client_secret
-    FORGE_CALLBACK = http://localhost:3000/api/forge/callback/oauth
+    APS_CLIENT_ID = your_client_key
+    APS_CLIENT_SECRET = your_client_secret
+    APS_CALLBACK = http://localhost:3000/api/aps/callback/oauth
 ```
 ![variables](variables.png) 
 
 - Before running the plugin, since we need to communicate with 3 legged token callback over HTTP and HTTPS, please run the app with `Admin level`, or at a minimum, you need to configure a URL registration and add a Firewall exception for the URL your service will be using. You can configure these settings with the Netsh.exe tool as follow. Please refer [Configuring HTTP and HTTPS](https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/configuring-http-and-https?redirectedfrom=MSDN) for details.
 
 ```powershell
-netsh http add urlacl url=http://+:3000/api/forge/callback/oauth/ user=DOMAIN\user
+netsh http add urlacl url=http://+:3000/api/aps/callback/oauth/ user=DOMAIN\user
 ```
 
 # Packages 3rd party libraries used
@@ -76,8 +76,8 @@ netsh http add urlacl url=http://+:3000/api/forge/callback/oauth/ user=DOMAIN\us
 
 # Further Reading
 **Documentation:**
-- [Data Management API](https://forge.autodesk.com/en/docs/data/v2/developers_guide/overview/)
-- [BIM 360 API](https://developer.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
+- [Data Management API](https://aps.autodesk.com/en/docs/data/v2/developers_guide/overview/)
+- [BIM 360 API](https://developer.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://aps.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
 - [Revit SDK](https://www.revitapidocs.com/)
 
 
@@ -86,7 +86,7 @@ netsh http add urlacl url=http://+:3000/api/forge/callback/oauth/ user=DOMAIN\us
 
 - Before running the plugin, since we need to communicate with 3 legged token callback over HTTP and HTTPS. At a minimum, you want to configure a URL registration and add a Firewall exception for the URL your service will be using. You can configure these settings with the Netsh.exe tool as follow. 
 ```powershell
-netsh http add urlacl url=http://+:3000/api/forge/callback/oauth/ user=DOMAIN\user
+netsh http add urlacl url=http://+:3000/api/aps/callback/oauth/ user=DOMAIN\user
 ```
 Please refer [Configuring HTTP and HTTPS](https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/configuring-http-and-https?redirectedfrom=MSDN) for details.
 
@@ -97,12 +97,12 @@ Please refer [Configuring HTTP and HTTPS](https://docs.microsoft.com/en-us/dotne
 
 - The 3 legged token will be expired in 30 minutes. The refresh token is not kept and made to refresh the access token automatically. You need to login again if the token is expired. Feel free to improve this feature.
 
-- Please DO keep the Forge App key under your user environment variable. Not expose to others.
+- Please DO keep the APS App key under your user environment variable. Not expose to others.
 
 # License
 - This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE.md) file for full details.
 
 
 # Written by
-- Zhong Wu [@johnonsoftware](https://twitter.com/johnonsoftware), [Forge Partner Development](http://forge.autodesk.com)
-- Based on the original sample `CloudAPISample` under Revit SDK 2022 by Will Gu, Software Developer, Autodesk.
+- Zhong Wu [@johnonsoftware](https://twitter.com/johnonsoftware), [Autodesk Partner Development](http://aps.autodesk.com)
+- Based on the original sample `CloudAPISample` under Revit SDK 2023 by Will Gu, Software Developer, Autodesk.

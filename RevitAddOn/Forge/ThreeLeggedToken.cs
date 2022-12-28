@@ -6,7 +6,7 @@ using Autodesk.Forge;
 using Autodesk.Forge.Client;
 using System.Threading;
 
-namespace Revit.SDK.Samples.CloudAPISample.CS.Forge
+namespace Revit.SDK.Samples.CloudAPISample.CS.APS
 {
 
     class ThreeLeggedToken
@@ -26,9 +26,9 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Forge
         private static readonly Scope[] _scope = new Scope[] { Scope.DataRead, Scope.DataWrite };
 
         // please set your Forge App client key in the environment variable first
-        private static string FORGE_CLIENT_ID = Environment.GetEnvironmentVariable("FORGE_CLIENT_ID", EnvironmentVariableTarget.User) ?? "your_client_id";
-        private static string FORGE_CLIENT_SECRET = Environment.GetEnvironmentVariable("FORGE_CLIENT_SECRET", EnvironmentVariableTarget.User) ?? "your_client_secret";
-        private static string FORGE_CALLBACK = Environment.GetEnvironmentVariable("FORGE_CALLBACK", EnvironmentVariableTarget.User) ?? "your_callback";
+        private static string APS_CLIENT_ID = Environment.GetEnvironmentVariable("APS_CLIENT_ID", EnvironmentVariableTarget.User) ?? "your_client_id";
+        private static string APS_CLIENT_SECRET = Environment.GetEnvironmentVariable("APS_CLIENT_SECRET", EnvironmentVariableTarget.User) ?? "your_client_secret";
+        private static string APS_CALLBACK = Environment.GetEnvironmentVariable("APS_CALLBACK", EnvironmentVariableTarget.User) ?? "your_callback";
 
 
         internal delegate void NewBearerDelegate( );
@@ -61,13 +61,13 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Forge
                 }
                 // Initialize our web listerner
                 _httpListener = new HttpListener();
-                _httpListener.Prefixes.Add(FORGE_CALLBACK.Replace("localhost", "+") + "/");
+                _httpListener.Prefixes.Add(APS_CALLBACK.Replace("localhost", "+") + "/");
                 _httpListener.Start();
                 
                 IAsyncResult result = _httpListener.BeginGetContext(_3leggedAsyncWaitForCode, cbData);
 
                 // Generate a URL page that asks for permissions for the specified scopes, and call our default web browser.
-                string oauthUrl = _threeLeggedApi.Authorize(FORGE_CLIENT_ID, oAuthConstants.CODE, FORGE_CALLBACK, _scope);
+                string oauthUrl = _threeLeggedApi.Authorize(APS_CLIENT_ID, oAuthConstants.CODE, APS_CALLBACK, _scope);
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(oauthUrl));
             }
             catch (Exception e )
@@ -109,7 +109,7 @@ namespace Revit.SDK.Samples.CloudAPISample.CS.Forge
                     // Call the asynchronous version of the 3-legged client with HTTP information
                     // HTTP information will help you to verify if the call was successful as well
                     // as read the HTTP transaction headers.
-                    ApiResponse<dynamic> bearer = await _threeLeggedApi.GettokenAsyncWithHttpInfo(FORGE_CLIENT_ID, FORGE_CLIENT_SECRET, oAuthConstants.AUTHORIZATION_CODE, code, FORGE_CALLBACK);
+                    ApiResponse<dynamic> bearer = await _threeLeggedApi.GettokenAsyncWithHttpInfo(APS_CLIENT_ID, APS_CLIENT_SECRET, oAuthConstants.AUTHORIZATION_CODE, code, APS_CALLBACK);
                     if (bearer.StatusCode != 200 || bearer.Data == null)
                     {
                         throw new Exception("Request failed! ");
